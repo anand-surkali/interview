@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+  <meta http-equiv="refresh">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <title>Search</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+img{
+  margin:10px;
+}
+</style>
+<script type="text/javascript">
+ var app = angular.module("app", []);
+ //console.log("running...");
+ app.controller("HttpGetController", function ($scope, $http, $window) {
+   var host=location.hostname;
+     $scope.getImages = function () {
+      var id=location.pathname;
+      var id = id.substring(8, 32);
+      console.log("Img id: " + id);
+
+
+           var data = $.param({
+              _id: id
+            });
+           var config = {
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+
+            $http.post('http://'+host+':8000/image/'+ id, data, config)
+            .then(function (response) {
+               // $scope.PostDataResponse = data;
+          alert('Images');
+         $scope.status=response.data;
+      //   alert(status);
+          console.log(status);
+
+            })
+            .catch(function (data, status, header, config) {
+                console.log('error');          
+      });
+    };
+    });
+</script>
+  </head>
+  <body class="body" ng-app="app" ng-controller="HttpGetController" style="background-color: #eee;">
+ 
+    <div class="site-wrapper" style="margin-top:100px;" ng-init="getImages()">
+
+
+        <div class="container" >
+   <div class="col-md-offset-2 col-md-8 ">
+            <div style="background-color:#fff; padding:20px;">
+<h3>{{status.name | uppercase}}</h3>
+
+                    <img ng-src="../images/{{status.img1}}" style="height:100px; width:100px;">
+                    <img ng-src="../images/{{status.img2}}">
+                    <img ng-src="../images/{{status.img3}}">
+                    <img ng-src="../images/{{status.img4}}">
+                    <img ng-src="../images/{{status.img5}}">
+                    <img ng-src="../images/{{status.img6}}">
+                    <img ng-src="../images/{{status.img7}}">
+                    <img ng-src="../images/{{status.img8}}">
+                    <img ng-src="../images/{{status.img9}}">
+                    <img ng-src="../images/{{status.img10}}">
+                    <img ng-src="../images/{{status.img11}}">
+                    <img ng-src="../images/{{status.img12}}">
+                    <img ng-src="../images/{{status.img13}}">
+                    <img ng-src="../images/{{status.img14}}">
+                    <img ng-src="../images/{{status.img15}}">
+            </div>
+          </div>
+</div>
+         
+
+<br>
+<br>
+<br>
+
+    </div>
+
+    
+  </body>
+</html>

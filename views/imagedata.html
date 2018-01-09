@@ -1,0 +1,74 @@
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+  <meta http-equiv="refresh">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <title>Search</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<script type="text/javascript">
+ var app = angular.module("app", []);
+  app.controller("HttpGetController", function ($scope, $http, $window) {
+   var host=location.hostname;
+           
+            $http.get('http://'+host+':8000/findImageName')
+            .then(function (response) {
+               // $scope.PostDataResponse = data;
+         $scope.status=response.data;
+      //   alert(status);
+          console.log($scope.status);
+            })
+            .catch(function (data, status, header, config) {
+                console.log('error');          
+      });
+
+      function imgView() {
+        console.log($scope.x._id);
+      }
+
+    });
+
+
+  
+</script>
+  </head>
+  <body class="body" ng-app="app" ng-controller="HttpGetController" style="background-color: #eee;">
+ 
+    <div class="site-wrapper" style="margin-top:100px;">
+
+
+        <div class="container" >
+   <div class="col-md-offset-2 col-md-6 " >
+            <div style="background-color:#fff; padding:50px;">
+              <p ng-repeat="x in status">
+                <a href="images/{{x._id}}" ng-click="imgView()">
+                    <span style="font-size:20px;">{{x.name | uppercase}}</span>
+                  </a>
+              </p>
+              <div >
+                <img ng-src="{{x.img1}}">
+              </div>
+
+
+            </div>
+          </div>
+</div>
+         
+
+
+<br>
+<br>
+<br>
+    </div>
+
+    
+  </body>
+</html>
